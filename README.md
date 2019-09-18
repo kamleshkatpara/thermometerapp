@@ -1,6 +1,6 @@
 # thermometerApp
 
-# Installation
+## Installation
 
 1) clone the repository on your local machine using git.
 
