@@ -3,6 +3,7 @@
 # Installation
 
 1) clone the repository on your local machine using git.
+
    `git clone https://github.com/kamleshkatpara/thermometerapp.git`
 2) open command line go to the project folder thermometerapp and run `npm install` command to install the required modules.
 3) once the modules are successfully installed. To start the application on dev server run `ng serve`.
