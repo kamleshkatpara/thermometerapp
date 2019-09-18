@@ -7,6 +7,7 @@
 2) open command line go to the project folder thermometerapp and run `npm install` command to install the required modules.
 3) once the modules are successfully installed. To start the application on dev server run `ng serve`.
 
+![thermometer app](https://github.com/kamleshkatpara/thermometerapp/raw/master/preview.JPG)
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
