@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StockChart } from 'angular-highcharts';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DataService } from './../shared/services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -9,35 +10,40 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AppComponent {
 
+  formData = new FormData();
   stock: StockChart;
   show = false;
+  temperatures: any;
 
-  constructor(private spinner: NgxSpinnerService) { }
+  constructor(private spinner: NgxSpinnerService, private dateService: DataService) { }
 
-  onFileChanged(event: { srcElement: { files: any[]; }; }) {
-    const file = event.srcElement.files[0];
-    if (file) {
-      this.show = false;
-      this.spinner.show();
-      const reader = new FileReader();
-      reader.readAsText(file, 'UTF-8');
-      reader.onload = e => {
-        const data = JSON.parse(e.target['result'] as any);
-        const output = data.map(obj => {
+  onFileChanged(file: File) {
+
+    this.show = false;
+    this.spinner.show();
+
+    this.formData.append('datafile', file[0], file[0].name);
+
+    this.dateService
+      .uploadFile(this.formData)
+      .subscribe(temperatures => {
+
+        this.formData.delete('datafile');
+
+        this.temperatures = temperatures;
+        this.temperatures.sort((a, b) => a.ts - b.ts);
+
+        const output = this.temperatures.map(obj => {
           return Object.keys(obj).sort().map(key => {
             return obj[key];
           });
         });
-        this.loadChart(output);
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
-      };
 
-      reader.onerror = e => {
-        console.log('error reading file', e);
-      };
-    }
+        this.loadChart(output);
+
+        setTimeout(() => this.spinner.hide());
+
+      }, err => console.warn(err));
   }
 
   loadChart(data: any) {

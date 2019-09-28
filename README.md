@@ -1,4 +1,4 @@
-# thermometerApp
+# thermometerapp
 
 ## Installation
 

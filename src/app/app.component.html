@@ -1,9 +1,11 @@
-<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-<div class="wrapper">
-  <button (click)="fileInput.click()" class="uploadBtn">Upload Data File</button>
+<div class="content" role="main">
+  <input style="display: none" type="file" name="datafile" (change)="onFileChanged($event.target.files)" #fileInput>
+  <div class="wrapper">
+    <button (click)="fileInput.click()" class="uploadBtn">Upload Data File</button>
+  </div>
+  <ngx-spinner bdOpacity=0.9 bdColor="" size="medium" color="#ff3333" type="ball-clip-rotate-pulse"
+    [fullScreen]="false">
+    <p style="color: red"> Processing file... </p>
+  </ngx-spinner>
+  <div *ngIf="show" [chart]="stock"></div>
 </div>
-<ngx-spinner bdOpacity=0.9 bdColor="" size="medium" color="#ff3333" type="ball-clip-rotate-pulse" [fullScreen]="false">
-  <p style="color: red"> Loading... </p>
-</ngx-spinner>
-
-<div *ngIf="show" [chart]="stock"></div>
